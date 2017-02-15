@@ -12,7 +12,7 @@ My first task was to get the API working and ready to serve data. I created a mo
 
 ###UI
 
-The UI is based on Twitter Bootstrap for the layout and AngularJS to handle the data transfer. I used a 3rd-party directive to handle displaying the data in a grid and allowing visitor to update the Employee Grid inline. There's aditional logic/code in this directive so that it calls my Service to send any Employee changes/updates to the API backend. The code I added starts on Line 92 in UI\app\bower_components\simple-grid\src\simple-grid.js. The AngularJS Service/Factory contains $http.GET and $http.POST methods which is injected into the AngularJS View1Ctrl Controller and the simple-grid directive respectfully for Seperation-Of-Concerns. The Grid is populated with the Employee data by the Service $http.GET during the initial page load.
+The UI is based on Twitter Bootstrap for the layout and AngularJS to handle the data transfer. I used a 3rd-party directive to handle displaying the data in a grid and allowing visitor to update the Employee Grid inline. There's aditional logic/code in this directive so that it calls my Service to send any Employee changes/updates to the API backend. The code I added starts on Line 92 [simple-grid.js](AngularSeed-MVCDemo/UI/app/bower_components/simple-grid/src/simple-grid.js). The AngularJS Service/Factory contains $http.GET and $http.POST methods which is injected into the AngularJS View1Ctrl Controller and the simple-grid directive respectfully for Seperation-Of-Concerns. The Grid is populated with the Employee data by the Service $http.GET during the initial page load.
 
 ##Installation
 
@@ -20,6 +20,7 @@ This repo has an Angular 1.5.11 app (/UI), and ASP.NET API app (/API).
 
 1. Fork or download the code from this repository.
 1. Open the sln file in the /API directory in Visual Studio and start the project in Debug mode.
+1. Change the localhost port numbers in [app.js](AngularSeed-MVCDemo/UI/app/app.js) to your own config.
 1. Get the Angular application working.
     1. Be sure NPM and Bower are installed
         * Type `npm` at the command-line. If you don't have it, get it here: [NPM](https://www.npmjs.org/)
