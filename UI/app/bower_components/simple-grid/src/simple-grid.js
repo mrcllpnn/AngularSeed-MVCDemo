@@ -3,7 +3,7 @@
     'use strict';
 
     angular.module('simpleGrid', [])//['sly'])
-        .directive('simpleGrid', function ($timeout, $log,sharedService) {
+        .directive('simpleGrid', function ($timeout, $log, sharedService) {
             var gridNum = 0;
             return {
                 scope: {
@@ -11,7 +11,7 @@
                 },
 
                 link: function (scope, elem, attrs) {
-                    
+
                     function isEditable(editable) {
                         //$log.debug('isEditable');
                         if (angular.isUndefined(editable)) {
@@ -19,27 +19,27 @@
                         }
                         return editable || false;
                     }
-                    
+
                     function initialize() {
                         scope.gridNum = gridNum;
                         gridNum += 1;
-                        
+
                         scope.page = [];
                         scope.selectedRow = null;
                         scope.focusedRow = null;
-                        
+
                         scope.$watchCollection('simpleGrid.getData()', function (newVal) {
                             scope.data = newVal;
                             scope.updatePage();
                         });
-                        
+
                         scope.$watch('simpleGrid.options.pageSize', scope.updatePage);
                         scope.$watch('simpleGrid.options.pageNum', scope.updatePage);
-                        
+
                         scope.$watch('simpleGrid.options.editable', function (editable) {
                             scope.gridIsEditable = isEditable(editable);
                         });
-                        
+
                         scope.$watch('simpleGrid.options.columns', function (newVal) {
                             angular.forEach(newVal, function (column) {
                                 if (column.inputType === 'select') {
@@ -48,9 +48,9 @@
                                 column.$title = column.title || scope.capitalize(column.field);
                             });
                         }, true);
-                        
+
                     }
-                    
+
                     scope.updatePage = function () {
                         var i,
                             pageSize,
@@ -63,7 +63,7 @@
                         pageStart = (scope.simpleGrid.options.pageNum || 0) * pageSize;
                         for (i = pageStart;
                                 i < Math.min(pageStart + pageSize,
-                                             scope.data.length);
+                                             scope.data.length) ;
                                 i += 1) {
                             scope.page.push(scope.data[i]);
                         }
@@ -83,31 +83,30 @@
                             scope.simpleGrid.options.rowDeleted(row);
                         }
                     };
-					
-					scope.editRequested = function (row) {
+
+                    scope.editRequested = function (row) {
                         if (scope.simpleGrid.options.perRowEditModeEnabled) {
                             row.$editable = !(row.$editable || false);
                         }
                         if (scope.simpleGrid.options.editRequested) {
-							if (scope.savedRow){
-								if (scope.savedRow.FirstName != row.FirstName ||
+                            if (scope.savedRow) {
+                                if (scope.savedRow.FirstName != row.FirstName ||
 									scope.savedRow.LastName != row.LastName ||
-									scope.savedRow.JobTitle != row.JobTitle)
-								{									
-									scope.obj = { "FirstName":row.FirstName, "LastName":row.LastName, "JobTitle":row.JobTitle};
-									
-									var res = sharedService.postData(scope.obj)
-									res.success(function(data, status, headers, config) {
-										console.log("Successful Post");
-										console.log(scope.obj);
-										console.log(data);
-									});
-									res.error(function(data, status, headers, config) {
-										console.log("Failure message: " + JSON.stringify({data: data}));
-									});								
-								}
-							}
-							scope.savedRow = angular.copy(row);							
+									scope.savedRow.JobTitle != row.JobTitle) {
+                                    scope.obj = { "FirstName": row.FirstName, "LastName": row.LastName, "JobTitle": row.JobTitle };
+
+                                    var res = sharedService.postData(scope.obj)
+                                    res.success(function (data, status, headers, config) {
+                                        console.log("Successful Post");
+                                        console.log(scope.obj);
+                                        console.log(data);
+                                    });
+                                    res.error(function (data, status, headers, config) {
+                                        console.log("Failure message: " + JSON.stringify({ data: data }));
+                                    });
+                                }
+                            }
+                            scope.savedRow = angular.copy(row);
                             scope.simpleGrid.options.editRequested(row);
                         }
                     };
@@ -122,12 +121,12 @@
                         var elem = null, elems,
                             targetRowIndex = null;
                         switch (event.keyCode) {
-                        case 40: //down
-                            targetRowIndex = rowIndex + 1;
-                            break;
-                        case 38: //up
-                            targetRowIndex = rowIndex - 1;
-                            break;
+                            case 40: //down
+                                targetRowIndex = rowIndex + 1;
+                                break;
+                            case 38: //up
+                                targetRowIndex = rowIndex - 1;
+                                break;
                         }
                         if (null !== targetRowIndex) {
                             elem = document.getElementById(scope.formName(targetRowIndex));
@@ -236,7 +235,7 @@
                             scope.simpleGrid.options.cellFocused(row, column);
                         }
                     };
-                    
+
                     scope.getOptions = function (options) {
                         //$log.debug('getOptions');//, options);
                         if (options.length && angular.isString(options[0])) {
