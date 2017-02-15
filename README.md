@@ -26,7 +26,7 @@ This repo has an Angular 1.5.11 app (/UI), and ASP.NET API app (/API).
         * Type `bower` at the command-line. If you don't have it get it here: [Bower](http://bower.io/)
     1. Navigate to the /UI directory.    
     1. Run `npm start` to start the UI 
-    1. Navigate to http://localhost:8000/
+ 1. Navigate to http://localhost:8000/
 
 You should see two employees listed in a grid which means everything is working.
 
